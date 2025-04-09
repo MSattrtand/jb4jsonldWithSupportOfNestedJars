@@ -101,8 +101,9 @@ public class ClasspathScanner {
 
     private void processJarFile(URL jarResource, String packageName) {
         final String relPath = packageName.replace('.', '/');
-        final String jarPath = jarResource.getPath().replaceFirst("[.]jar[!].*", JAR_FILE_SUFFIX)
-                                          .replaceFirst("file:", "");
+        final String jarPath = jarResource.getPath().replaceFirst("[.]jar/?!.*", JAR_FILE_SUFFIX)
+                .replaceFirst("file:", "")
+                .replaceFirst("nested:", "");
 
         LOG.trace("Scanning jar file {} for classes.", jarPath);
         try (final JarFile jarFile = new JarFile(jarPath)) {
